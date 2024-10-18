@@ -17,7 +17,7 @@ RUN if [ $TARGETARCH = "amd64" ]; then \
 	apt install -y mesa-utils mesa-va-drivers mesa-vulkan-drivers intel-media-va-driver-non-free vainfo \
 	; fi
 # Install handbrake
-RUN apt install -y handbrake-cli
+RUN apt install -y handbrake-cli=1.6.1
 # Install dumb-init
 RUN apt install -y dumb-init
 
