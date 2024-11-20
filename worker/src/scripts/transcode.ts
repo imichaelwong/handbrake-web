@@ -63,17 +63,70 @@ export async function StartTranscode(jobID: number, socket: Socket) {
 		// logger.add(fileTransport);
 		const jobLogger = createJobLogger(jobID);
 
-		handbrake = spawn('HandBrakeCLI', [
-			'--preset-import-file',
-			presetPath!,
-			'--preset',
-			jobData.preset_id,
-			'-i',
-			jobData.input_path,
-			'-o',
-			tempOutputName,
-			'--json',
-		]);
+		// handbrake = spawn('HandBrakeCLI', [
+		// 	'--preset-import-file',
+		// 	presetPath!,
+		// 	'--preset',
+		// 	jobData.preset_id,
+		// 	'-i',
+		// 	jobData.input_path,
+		// 	'-o',
+		// 	tempOutputName,
+		// 	'--json',
+		// ]);
+
+		if (jobData.preset_id == '2m-x265') {
+			jobLogger.info(
+				`[worker] with preset 2m-x265, ${jobData.preset_id}, using qsv_h265 encoder.`
+			);
+			handbrake = spawn('HandBrakeCLI', [
+				'-e',
+				'qsv_h265',
+				'-b',
+				'2000',
+				'-B',
+				'160',
+				'-x',
+				'lowpower=1:force-cqp=1',
+				'-i',
+				jobData.input_path,
+				'-o',
+				tempOutputName,
+				'--json',
+			]);
+		} else if (jobData.preset_id == '4m-x265') {
+			jobLogger.info(
+				`[worker] with preset 4m-x265, ${jobData.preset_id}, using qsv_h265 encoder.`
+			);
+			handbrake = spawn('HandBrakeCLI', [
+				'-e',
+				'qsv_h265',
+				'-b',
+				'4000',
+				'-B',
+				'160',
+				'-x',
+				'lowpower=1:force-cqp=1',
+				'-i',
+				jobData.input_path,
+				'-o',
+				tempOutputName,
+				'--json',
+			]);
+		} else {
+			jobLogger.info(`[worker] with another preset, using ${jobData.preset_id}`);
+			handbrake = spawn('HandBrakeCLI', [
+				'--preset-import-file',
+				presetPath!,
+				'--preset',
+				jobData.preset_id,
+				'-i',
+				jobData.input_path,
+				'-o',
+				tempOutputName,
+				'--json',
+			]);
+		}
 
 		const newStatus: JobStatusType = {
 			transcode_stage: TranscodeStage.Scanning,

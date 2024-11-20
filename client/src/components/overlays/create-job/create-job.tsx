@@ -43,7 +43,9 @@ export default function CreateJob({ onClose }: Params) {
 	// Output ------------------------------------------------------------------
 	const [outputPath, setOutputPath] = useState('');
 	const [outputFiles, setOutputFiles] = useState<DirectoryItemsType>([]);
-	const [outputExtension, setOutputExtension] = useState(HandbrakeOutputExtensions.mkv);
+	// change default ext to mp4
+	// const [outputExtension, setOutputExtension] = useState(HandbrakeOutputExtensions.mkv);
+	const [outputExtension, setOutputExtension] = useState(HandbrakeOutputExtensions.mp4);
 	const [nameCollision, setNameCollision] = useState(false);
 	const [outputChanged, setOutputChanged] = useState(false);
 	const [allowCollision, setAllowCollision] = useState(false);
@@ -411,7 +413,6 @@ export default function CreateJob({ onClose }: Params) {
 						setValue={setPresetCategory}
 						onChange={handlePresetCategoryChange}
 					>
-						<option value=''>N/A</option>
 						{Object.keys(presets)
 							.filter((category) => Object.keys(presets[category]).length)
 							.sort((a, b) =>
@@ -440,7 +441,6 @@ export default function CreateJob({ onClose }: Params) {
 						value={preset}
 						setValue={setPreset}
 					>
-						<option value=''>N/A</option>
 						{isDefaultPreset &&
 							defaultPresets[presetCategory.replace(/^Default:\s/, '')] &&
 							Object.keys(
