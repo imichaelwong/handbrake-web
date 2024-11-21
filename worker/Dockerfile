@@ -10,6 +10,9 @@ RUN sed -i -e's/ main/ main contrib non-free non-free-firmware/g' /etc/apt/sourc
 # 	echo "Package: *" >> /etc/apt/preferences.d/prferences && \
 # 	echo "Pin: release a=unstable" >> /etc/apt/preferences.d/prferences && \
 # 	echo "Pin-Priority: 450" >> /etc/apt/preferences.d/prferences
+
+# add trixie repo to sources since hb v1.8.2 is not in bookworm yet
+RUN echo "deb http://ftp.us.debian.org/debian trixie main" > /etc/apt/sources.list
 RUN apt update
 
 # Install mesa and intel media drivers
@@ -17,7 +20,8 @@ RUN if [ $TARGETARCH = "amd64" ]; then \
 	apt install -y mesa-utils mesa-va-drivers mesa-vulkan-drivers intel-media-va-driver-non-free vainfo \
 	; fi
 # Install handbrake
-RUN apt install -y handbrake-cli
+# RUN apt install -y handbrake-cli
+RUN apt install -y handbrake-cli=1.8.2+ds1-1
 # Install dumb-init
 RUN apt install -y dumb-init
 

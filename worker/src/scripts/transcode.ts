@@ -77,7 +77,7 @@ export async function StartTranscode(jobID: number, socket: Socket) {
 
 		if (jobData.preset_id == '2m-x265') {
 			jobLogger.info(
-				`[worker] with preset 2m-x265, ${jobData.preset_id}, using qsv_h265 encoder.`
+				`[worker] with preset ${jobData.preset_id}, using qsv_h265 encoder.`
 			);
 			handbrake = spawn('HandBrakeCLI', [
 				'-e',
@@ -96,7 +96,7 @@ export async function StartTranscode(jobID: number, socket: Socket) {
 			]);
 		} else if (jobData.preset_id == '4m-x265') {
 			jobLogger.info(
-				`[worker] with preset 4m-x265, ${jobData.preset_id}, using qsv_h265 encoder.`
+				`[worker] with preset ${jobData.preset_id}, using qsv_h265 encoder.`
 			);
 			handbrake = spawn('HandBrakeCLI', [
 				'-e',
@@ -114,7 +114,7 @@ export async function StartTranscode(jobID: number, socket: Socket) {
 				'--json',
 			]);
 		} else {
-			jobLogger.info(`[worker] with another preset, using ${jobData.preset_id}`);
+			jobLogger.info(`[worker] with preset ${jobData.preset_id}.`);
 			handbrake = spawn('HandBrakeCLI', [
 				'--preset-import-file',
 				presetPath!,
