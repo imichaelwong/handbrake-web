@@ -51,8 +51,11 @@ export default function CreateJob({ onClose }: Params) {
 	const [allowCollision, setAllowCollision] = useState(false);
 
 	// Preset ------------------------------------------------------------------
-	const [presetCategory, setPresetCategory] = useState('');
-	const [preset, setPreset] = useState('');
+	// const [presetCategory, setPresetCategory] = useState('');
+	// const [preset, setPreset] = useState('');
+	// hardcode to set the default preset
+	const [presetCategory, setPresetCategory] = useState('personal');
+	const [preset, setPreset] = useState('2m-x265');
 	const [isDefaultPreset, setIsDefaultPreset] = useState(false);
 
 	// Results -----------------------------------------------------------------
@@ -413,6 +416,7 @@ export default function CreateJob({ onClose }: Params) {
 						setValue={setPresetCategory}
 						onChange={handlePresetCategoryChange}
 					>
+						<option value=''>N/A</option>
 						{Object.keys(presets)
 							.filter((category) => Object.keys(presets[category]).length)
 							.sort((a, b) =>
@@ -441,6 +445,7 @@ export default function CreateJob({ onClose }: Params) {
 						value={preset}
 						setValue={setPreset}
 					>
+						<option value=''>N/A</option>
 						{isDefaultPreset &&
 							defaultPresets[presetCategory.replace(/^Default:\s/, '')] &&
 							Object.keys(
